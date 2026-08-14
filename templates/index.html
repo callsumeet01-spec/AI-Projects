@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Research Assistant</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: url("/static/background.jpg") no-repeat center center fixed;
+            background-size: cover;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1); /* transparent */
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            width: 600px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        h1 { color: #000; }
+        label { color: #000; font-weight: bold; }
+        input[type=text] {
+            width: 80%;
+            padding: 12px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 6px;
+            outline: none;
+        }
+        button {
+            padding: 12px 20px;
+            margin-top: 15px;
+            border: none;
+            border-radius: 6px;
+            background: linear-gradient(135deg, #007bff, #00c6ff);
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+        button:hover {
+            background: linear-gradient(135deg, #0056b3, #0099cc);
+            transform: scale(1.05);
+        }
+        .result {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.85);
+            text-align: left;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        .result h2 {
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+        .result h3 {
+            color: #333;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+        }
+        .result ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        .result li {
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        #spinner {
+            display: none;
+            margin-top: 20px;
+            text-align: center;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .thinking span {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            margin: 0 3px;
+            background: #00c6ff;
+            border-radius: 50%;
+            animation: bounce 0.6s infinite alternate;
+        }
+
+        .thinking span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        .thinking span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+@keyframes bounce {
+    from { transform: translateY(0); }
+    to { transform: translateY(-10px); }
+}
+    </style>
+    <script>
+        function showSpinner() {
+            document.getElementById("spinner").style.display = "block";
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>AI Personal Research Assistant</h1>
+        <form method="POST" onsubmit="showSpinner()">
+            <label>What would you like to research?</label><br>
+            <input type="text" name="topic" required>
+            <br>
+            <button type="submit">🔍 Search</button>
+        </form>
+        <div id="spinner" class="thinking">
+        <span></span><span></span><span></span>
+        <p>🤖 AI thinking...</p>
+            </div>
+        {% if summary %}
+        <div class="result">
+            <h2>Research Summary</h2>
+            <ul>
+            {% for line in summary.splitlines() %}
+                {% if line.strip() %}
+                    <li>{{ line }}</li>
+                {% endif %}
+            {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <title>AI Research Assistant</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: url("/static/background.jpg") no-repeat center center fixed;
+            background-size: cover;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            width: 600px;
+        }
+        h1 { color: #333; }
+        input[type=text] {
+            width: 80%;
+            padding: 10px;
+            margin-top: 10px;
+        }
+        button {
+            padding: 10px 15px;
+            margin-top: 15px;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            background: #f9f9f9;
+            text-align: left;
+        }
+        ul { margin: 0; padding-left: 20px; }
+        #spinner { display: none; margin-top: 20px; }
+    </style>
+    <script>
+        function showSpinner() {
+            document.getElementById("spinner").style.display = "block";
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>AI Personal Research Assistant</h1>
+        <form method="POST" onsubmit="showSpinner()">
+            <label><b>What would you like to research?</b></label><br>
+            <input type="text" name="topic" required>
+            <br>
+            <button type="submit">Search</button>
+        </form>
+        <div id="spinner">⏳ Loading... please wait</div>
+        {% if summary %}
+        <div class="result">
+            <h2>Research Summary</h2>
+            <ul>
+            {% for line in summary.splitlines() %}
+                {% if line.strip() %}
+                    <li>{{ line }}</li>
+                {% endif %}
+            {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html> -->
